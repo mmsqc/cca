@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.ren{
+				width:50px;
+				height:160px;
+				border-top:1px solid #ccc;
+				border-left:1px solid #ccc;
+				border-right:1px solid #ccc;
+			}
+			.cap{
+				height:10%;
+				border-bottom:1px solid #ccc;
+			}
+			.head{
+				height:20%;
+				border-bottom:1px solid #ccc;
+			}
+			.body{
+				height:70%;
+				border-bottom:1px solid #ccc;
+			}
+			.opts{
+				display:flex;
+				width:300px;
+				border:1px solid #ccc;
+				border-right:0;
+				margin-top:100px;
+			
+			}
+			.opts div{
+				flex:1;
+				border-right:1px solid #ccc;
+				text-align: center;
+			}
+			.opts div img{
+			}
+		</style>
+	</head>
+	<body>
+		<div class="ren">
+			<div class="cap"><img src=""/></div>
+			<div class="head"></div>
+			<div class="body"></div>
+		</div>
+		<div class="opts">
+			<div ><img src="./ren/cap1.png"/></div>
+			<div ><img src="./ren/cap2.png"/></div>
+			<div ><img src="./ren/cap3.png"/></div>
+			<div ><img src="./ren/cap4.png"/></div>
+		</div>
+	</body>
+</html>
+<script>
+	//获取节点
+	let cap = document.querySelector(".cap");
+	let capImg = document.querySelector(".cap img");
+	let capOpt = document.querySelectorAll(".opts img");
+	let capsrc = '';
+	for(let i=0;i<capOpt.length;i++){
+		console.log(i);
+		capOpt[i].ondragstart=function(){
+			//拿到图片的路径
+			console.log("拖拽开始");
+			capsrc = this.src;
+		}
+	}
+	cap.ondragover=function(event){event.preventDefault()}
+	cap.ondrop=function(){
+		capImg.src = capsrc;
+	}
+	
+	
+</script>

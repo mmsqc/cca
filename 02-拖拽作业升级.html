@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{margin:0;padding:0;}
+			.all{height:100vh;background-color: #eee;position:relative;}
+			.divColor{width:100px;height:50px;border:1px solid #000;margin:auto;}
+			.divBox{width:80%;height:300px;border:1px solid #000;margin:50px auto;display:flex;flex-wrap: wrap;}
+			.divBox div{
+				width:100px;height:50px;
+				position:absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="all">
+			<div class="divColor" draggable="true"></div>
+			<div class="divBox"></div>
+		</div>
+	</body>
+</html>
+<script>
+	//0.获取节点
+	let divColor = document.querySelector(".divColor");
+	let divBox = document.querySelector(".divBox");
+	
+	//1.设置小方块的背景颜色
+	divColor.style.backgroundColor = getColor();
+	
+	//2.开始拖拽，要获取拖拽的那个div的背景颜色
+	let bg = '';
+	let zuo = 0;
+	let tp = 0;
+	divColor.ondragstart=function(event){
+		bg = this.style.backgroundColor;
+		zuo = event.clientX - this.offsetLeft;
+		tp = event.clientY - this.offsetTop;
+	}
+	
+	//拖拽松开ondrop的时候，一个是在大div里面放一个盒子，背景颜色跟上面一样，另一个是上面的背景色改变
+	divBox.ondragover=function(event){
+		event.preventDefault();//阻止默认事件
+	}
+	divBox.ondrop=function(event){
+		// 复制一个上面的小盒子,然后加到下面的大盒子里面
+		let div = document.createElement("div");
+		div.style.backgroundColor = bg;
+		
+		// 设置位置
+		div.style.left = event.clientX - zuo + "px";
+		div.style.top = event.clientY -tp + "px";
+		
+		this.appendChild(div);
+		
+		divColor.style.backgroundColor = getColor();
+	}
+	
+	// 创建一个函数，这个函数的作用是能够返回一个随机颜色代码
+	function getColor (){
+		let aC = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"];
+		let color = '#';
+		for(let i=0;i<6;i++){
+			let r = parseInt(Math.random()*16)   // 获取0-15之间的随机数
+				color = color + aC[r];
+		}
+		return color;
+	}
+</script>
